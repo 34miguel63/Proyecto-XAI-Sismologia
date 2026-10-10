@@ -1,0 +1,30 @@
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Configuración local y secretos
+.env
+.vscode/
+
+# Datos sintéticos que pueden regenerarse
+datos/senales.npy
+datos/etiquetas.npy
+
+# Dataset opcional de gran tamaño
+datos/stead/
+
+# Modelo entrenado: se puede volver a generar
+modelos/*.pth
+
+# Resultados numéricos regenerables
+resultados/*.npy
+
+# Se conservan por defecto los CSV y las gráficas PNG.
+# Revisar el tamaño y las condiciones de uso de cada archivo
+# antes de subirlo al repositorio.
