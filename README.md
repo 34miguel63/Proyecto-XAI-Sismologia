@@ -1,3 +1,10 @@
+## Equipo 6
+
+*   Addel Vidal García
+*   Alejandro Colón Alvarez
+*   Miguel Angel Banteurt Blanco
+
+
 XAI aplicado a señales sísmicas
 
 1. Descripción del proyecto
