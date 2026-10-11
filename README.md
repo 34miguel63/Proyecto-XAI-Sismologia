@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 # 🌍 Proyecto XAI Sismología — CNN 1D con Inteligencia Artificial Explicable
+=======
+## Equipo 6
+
+*   Addel Vidal García
+*   Alejandro Colón Alvarez
+*   Miguel Angel Banteurt Blanco
+
+
+XAI aplicado a señales sísmicas
+>>>>>>> 5c3dea47bcbbd7982ff1dcccd5d3a61b9b94e113
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red.svg)](https://pytorch.org/)
