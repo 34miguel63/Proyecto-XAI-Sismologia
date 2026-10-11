@@ -1,30 +1,43 @@
-# Entorno virtual
+# ==============================================================================
+# Entornos virtuales
+# ==============================================================================
 .venv/
 venv/
 env/
 
+# ==============================================================================
 # Archivos temporales de Python
+# ==============================================================================
 __pycache__/
 *.py[cod]
+*$py.class
 .pytest_cache/
 
-# Configuración local y secretos
+# ==============================================================================
+# Configuración local, IDE y secretos
+# ==============================================================================
 .env
 .vscode/
+.idea/
+*.swp
+*.swo
 
-# Datos sintéticos que pueden regenerarse
-datos/senales.npy
-datos/etiquetas.npy
+# ==============================================================================
+# Datos y Modelos (Regenerables o muy pesados)
+# ==============================================================================
+# Ignoramos los .npy de datos para no saturar el repositorio
+datos/*.npy
+datos/crudos/
 
-# Dataset opcional de gran tamaño
-datos/stead/
-
-# Modelo entrenado: se puede volver a generar
+# Ignoramos los pesos del modelo (se pueden volver a entrenos en minutos)
 modelos/*.pth
 
-# Resultados numéricos regenerables
+# Ignoramos los arrays numéricos de resultados, pero NO las imágenes .png
 resultados/*.npy
+resultados/*.csv
 
-# Se conservan por defecto los CSV y las gráficas PNG.
-# Revisar el tamaño y las condiciones de uso de cada archivo
-# antes de subirlo al repositorio.
+# ==============================================================================
+# Archivos específicos de sistemas operativos
+# ==============================================================================
+.DS_Store
+Thumbs.db

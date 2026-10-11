@@ -20,14 +20,14 @@ np.random.seed(42)
 dispositivo = torch.device("cpu")
 print("Dispositivo:", dispositivo)
 
-# 2. Cargar las señales REALES (dataset CENAIS/Caribe)
-print("\n📂 Cargando dataset REAL (CENAIS/Caribe)...")
-X = np.load("datos/senales_reales.npy")
-y = np.load("datos/etiquetas_reales.npy")
+# 2. Cargar las señales CUBANAS
+print("\n📂 Cargando dataset cubano realista...")
+X = np.load("datos/senales_cubanas.npy")
+y = np.load("datos/etiquetas_cubanas.npy")
 
 print(f"   - Señales cargadas: {X.shape}")
 print(f"   - Etiquetas cargadas: {y.shape}")
-print(f"   - Distribución: {np.sum(y==0)} Ruido, {np.sum(y==1)} Evento Real")
+print(f"   - Distribución: {np.sum(y==0)} ruido, {np.sum(y==1)} eventos")
 
 # CNN 1D espera: muestras, canales, longitud
 X = X[:, np.newaxis, :]
@@ -91,9 +91,9 @@ optimizador = torch.optim.Adam(
 )
 
 # 7. Entrenar la red neuronal
-epocas = 20  # Aumentamos a 20 épocas para datos reales (más difíciles)
+epocas = 20  # Aumentamos a 20 épocas para datos más complejos
 
-print(f"\n🚀 Iniciando entrenamiento con {epocas} épocas...")
+print(f"\n Iniciando entrenamiento con {epocas} épocas...")
 for epoca in range(epocas):
     modelo.train()
     perdida_total = 0.0
@@ -132,7 +132,7 @@ y_real = y_test.numpy()
 exactitud = accuracy_score(y_real, predicciones)
 
 print("\n" + "="*50)
-print("📊 RESULTADOS DE LA CNN (DATOS REALES)")
+print("📊 RESULTADOS DE LA CNN (DATOS CUBANOS)")
 print("="*50)
 print(f"Exactitud (accuracy): {exactitud:.4f}")
 
@@ -142,7 +142,7 @@ print(
         y_real,
         predicciones,
         labels=[0, 1],
-        target_names=["Ruido Real", "Evento Real"],
+        target_names=["Ruido", "Evento Cubano"],
         zero_division=0
     )
 )
@@ -156,11 +156,11 @@ matriz = confusion_matrix(
 
 visualizador = ConfusionMatrixDisplay(
     confusion_matrix=matriz,
-    display_labels=["Ruido Real", "Evento Real"]
+    display_labels=["Ruido", "Evento Cubano"]
 )
 
 visualizador.plot(cmap="Blues")
-plt.title("Matriz de confusión - CNN 1D (Datos Reales CENAIS)")
+plt.title("Matriz de confusión - CNN 1D (Datos Cubanos)")
 plt.tight_layout()
 
 # 10. Guardar modelo y resultados
@@ -169,33 +169,33 @@ carpeta.mkdir(exist_ok=True)
 
 torch.save(
     modelo.state_dict(),
-    carpeta / "cnn_sismica_REAL.pth"
+    carpeta / "cnn_sismica_CUBANA.pth"
 )
 
 carpeta_resultados = Path("resultados")
 carpeta_resultados.mkdir(exist_ok=True)
 
 np.save(
-    carpeta_resultados / "y_real_reales.npy",
+    carpeta_resultados / "y_real_cubano.npy",
     y_real
 )
 
 np.save(
-    carpeta_resultados / "predicciones_reales.npy",
+    carpeta_resultados / "predicciones_cubano.npy",
     predicciones
 )
 
 np.save(
-    carpeta_resultados / "probabilidades_reales.npy",
+    carpeta_resultados / "probabilidades_cubano.npy",
     probabilidades.numpy()
 )
 
 plt.savefig(
-    carpeta_resultados / "matriz_confusion_real.png",
+    carpeta_resultados / "matriz_confusion_cubano.png",
     dpi=150
 )
 
-print("\n✅ Modelo guardado en modelos/cnn_sismica_REAL.pth")
+print("\n✅ Modelo guardado en modelos/cnn_sismica_CUBANA.pth")
 print("✅ Resultados guardados en la carpeta resultados.")
 
 plt.show()

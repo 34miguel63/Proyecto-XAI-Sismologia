@@ -33,13 +33,12 @@ class CNN1D(nn.Module):
     def forward(self, x):
         return self.capas(x)
 
-
-# 3. Cargar el modelo entrenado
+# 3. Cargar el modelo entrenado con datos cubanos
 modelo = CNN1D().to(dispositivo)
 
 modelo.load_state_dict(
     torch.load(
-        "modelos/cnn_sismica.pth",
+        "modelos/cnn_sismica_CUBANA.pth",
         map_location=dispositivo,
         weights_only=True
     )
@@ -47,9 +46,9 @@ modelo.load_state_dict(
 
 modelo.eval()
 
-# 4. Cargar los datos y recuperar la particion de prueba
-X = np.load("datos/senales.npy")
-y = np.load("datos/etiquetas.npy")
+# 4. Cargar los datos cubanos
+X = np.load("datos/senales_cubanas.npy")
+y = np.load("datos/etiquetas_cubanas.npy")
 
 indices = np.arange(len(y))
 
@@ -63,7 +62,7 @@ _, indices_test = train_test_split(
 X_test = X[indices_test]
 y_test = y[indices_test]
 
-# 5. Buscar un evento sintetico correctamente clasificado
+# 5. Buscar un evento cubano correctamente clasificado
 with torch.no_grad():
     entradas = torch.tensor(
         X_test[:, np.newaxis, :],
@@ -79,7 +78,7 @@ candidatos = np.where(
 
 if len(candidatos) == 0:
     raise RuntimeError(
-        "No se encontro un evento correctamente clasificado."
+        "No se encontro un evento cubano correctamente clasificado."
     )
 
 indice = int(candidatos[0])
@@ -110,11 +109,11 @@ with torch.no_grad():
         modelo(senal), dim=1
     )[0].numpy()
 
-print("Clase real: evento sintetico")
-print("Clase predicha: evento sintetico")
+print("Clase real: evento cubano")
+print("Clase predicha: evento cubano")
 print(f"Probabilidad de ruido: {probabilidades[0]:.4f}")
 print(
-    "Probabilidad de evento sintetico: "
+    "Probabilidad de evento cubano: "
     f"{probabilidades[1]:.4f}"
 )
 print(
@@ -129,15 +128,15 @@ fig, ejes = plt.subplots(
     2, 1, figsize=(12, 7), sharex=True
 )
 
-ejes[0].plot(tiempo, senal_np)
-ejes[0].set_title("Senal analizada por la CNN 1D")
-ejes[0].set_ylabel("Amplitud")
+ejes[0].plot(tiempo, senal_np, color='blue')
+ejes[0].set_title("Señal de evento cubano analizada por la CNN 1D")
+ejes[0].set_ylabel("Amplitud Normalizada")
 ejes[0].grid(True, alpha=0.3)
 
-ejes[1].plot(tiempo, relevancia)
+ejes[1].plot(tiempo, relevancia, color='red', alpha=0.7)
 ejes[1].axhline(0, color="black", linewidth=0.8)
 ejes[1].set_title(
-    "XAI: atribuciones de Integrated Gradients"
+    "XAI: Atribuciones de Integrated Gradients (Datos Cubanos)"
 )
 ejes[1].set_xlabel("Tiempo (s)")
 ejes[1].set_ylabel("Relevancia")
@@ -149,13 +148,13 @@ carpeta = Path("resultados")
 carpeta.mkdir(exist_ok=True)
 
 plt.savefig(
-    carpeta / "explicacion_integrated_gradients.png",
+    carpeta / "explicacion_cubana_integrated_gradients.png",
     dpi=150
 )
 
 print(
     "Grafico guardado en "
-    "resultados/explicacion_integrated_gradients.png"
+    "resultados/explicacion_cubana_integrated_gradients.png"
 )
 
 plt.show()
