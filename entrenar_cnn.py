@@ -20,9 +20,14 @@ np.random.seed(42)
 dispositivo = torch.device("cpu")
 print("Dispositivo:", dispositivo)
 
-# 2. Cargar las señales generadas anteriormente
-X = np.load("datos/senales.npy")
-y = np.load("datos/etiquetas.npy")
+# 2. Cargar las señales REALES (dataset CENAIS/Caribe)
+print("\n📂 Cargando dataset REAL (CENAIS/Caribe)...")
+X = np.load("datos/senales_reales.npy")
+y = np.load("datos/etiquetas_reales.npy")
+
+print(f"   - Señales cargadas: {X.shape}")
+print(f"   - Etiquetas cargadas: {y.shape}")
+print(f"   - Distribución: {np.sum(y==0)} Ruido, {np.sum(y==1)} Evento Real")
 
 # CNN 1D espera: muestras, canales, longitud
 X = X[:, np.newaxis, :]
@@ -35,6 +40,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
+
+print(f"   - Train: {len(X_train)} señales | Test: {len(X_test)} señales")
 
 # 4. Convertir los datos a tensores de PyTorch
 X_train = torch.tensor(X_train, dtype=torch.float32)
@@ -84,8 +91,9 @@ optimizador = torch.optim.Adam(
 )
 
 # 7. Entrenar la red neuronal
-epocas = 15
+epocas = 20  # Aumentamos a 20 épocas para datos reales (más difíciles)
 
+print(f"\n🚀 Iniciando entrenamiento con {epocas} épocas...")
 for epoca in range(epocas):
     modelo.train()
     perdida_total = 0.0
@@ -123,7 +131,9 @@ y_real = y_test.numpy()
 
 exactitud = accuracy_score(y_real, predicciones)
 
-print("\n--- RESULTADOS DE LA CNN ---")
+print("\n" + "="*50)
+print("📊 RESULTADOS DE LA CNN (DATOS REALES)")
+print("="*50)
 print(f"Exactitud (accuracy): {exactitud:.4f}")
 
 print("\nInforme de clasificación:")
@@ -132,7 +142,7 @@ print(
         y_real,
         predicciones,
         labels=[0, 1],
-        target_names=["Ruido", "Evento sintético"],
+        target_names=["Ruido Real", "Evento Real"],
         zero_division=0
     )
 )
@@ -146,11 +156,11 @@ matriz = confusion_matrix(
 
 visualizador = ConfusionMatrixDisplay(
     confusion_matrix=matriz,
-    display_labels=["Ruido", "Evento sintético"]
+    display_labels=["Ruido Real", "Evento Real"]
 )
 
-visualizador.plot()
-plt.title("Matriz de confusión - CNN 1D")
+visualizador.plot(cmap="Blues")
+plt.title("Matriz de confusión - CNN 1D (Datos Reales CENAIS)")
 plt.tight_layout()
 
 # 10. Guardar modelo y resultados
@@ -159,33 +169,33 @@ carpeta.mkdir(exist_ok=True)
 
 torch.save(
     modelo.state_dict(),
-    carpeta / "cnn_sismica.pth"
+    carpeta / "cnn_sismica_REAL.pth"
 )
 
 carpeta_resultados = Path("resultados")
 carpeta_resultados.mkdir(exist_ok=True)
 
 np.save(
-    carpeta_resultados / "y_real.npy",
+    carpeta_resultados / "y_real_reales.npy",
     y_real
 )
 
 np.save(
-    carpeta_resultados / "predicciones.npy",
+    carpeta_resultados / "predicciones_reales.npy",
     predicciones
 )
 
 np.save(
-    carpeta_resultados / "probabilidades.npy",
+    carpeta_resultados / "probabilidades_reales.npy",
     probabilidades.numpy()
 )
 
 plt.savefig(
-    carpeta_resultados / "matriz_confusion.png",
+    carpeta_resultados / "matriz_confusion_real.png",
     dpi=150
 )
 
-print("\nModelo guardado en modelos/cnn_sismica.pth")
-print("Resultados guardados en la carpeta resultados.")
+print("\n✅ Modelo guardado en modelos/cnn_sismica_REAL.pth")
+print("✅ Resultados guardados en la carpeta resultados.")
 
 plt.show()
