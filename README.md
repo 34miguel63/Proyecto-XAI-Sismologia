@@ -117,9 +117,21 @@ Proyecto XAI Sismologia/
 └── docs/                                  # Documentación adicional
 ```
 
-## 🙏 Agradecimientos
-- Centro Nacional de Investigaciones Sismológicas (CENAIS), Cuba.
-- Servicio Geológico de los Estados Unidos (USGS) por el catálogo de referencia.
+## 🙏 Créditos y Agradecimientos
 
-## 📄 Licencia
-Este proyecto está bajo la licencia MIT.
+### 🏛️ Fuente de Datos Sísmicos
+Los datos reales utilizados en este proyecto provienen del **Centro Nacional de Investigaciones Sismológicas (CENAIS)** de Cuba, la institución oficial de monitoreo sísmico del país.
+
+### 👥 Colaboración Académica
+Agradecemos especialmente a:
+
+- **Madeley Graham León** (Universidad de Oriente - IPSJAM) por compartir los archivos de datos y el documento de caracterización técnica (`docs/Caracterizacion_Datos_CENAIS_v2.docx`).
+- **Dr.C Dionis López Ramos** (Universidad de Oriente) por la supervisión académica del trabajo de origen.
+- **Dr. Bladimir Moreno Toirán** (CENAIS) por facilitar el acceso a las trazas sísmicas durante la visita técnica del 4 de marzo de 2026.
+
+### 🌐 Instituciones de Referencia
+- **CENAIS** (Cuba): Fuente oficial de los datos reales.
+- **USGS** (EE.UU.): Catálogo global de referencia.
+- **IRIS DMC** (Internacional): Respaldo mundial de datos sísmicos.
+
+📄 Consulta el documento completo de procedencia de datos en: [`docs/DATOS_CREDITOS.md`](docs/DATOS_CREDITOS.md)

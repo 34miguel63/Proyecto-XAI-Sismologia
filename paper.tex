@@ -1,31 +1,42 @@
-\documentclass[runningheads]{svproc}
+\documentclass[10pt,a4paper]{article}
 
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{abstract}
+\usepackage{authblk}
 
-\begin{document}
+% Configuración de márgenes para que se vea como un paper
+\geometry{a4paper, margin=1in}
 
-\mainmatter
+% Definición manual de keywords (article no tiene este comando nativo)
+\newcommand{\keywords}[1]{\par\noindent\textbf{Keywords:} #1\par}
 
 \title{Explainable AI for Seismic Signal Classification: A 1D CNN Approach Applied to Cuban Seismological Data}
 
-\author{Addel Vidal García \and Alejandro Colón Álvarez \and Miguel Ángel Banteurt Blanco}
+\author[1]{Addel Vidal García}
+\author[1]{Alejandro Colón Álvarez}
+\author[1]{Miguel Ángel Banteurt Blanco}
+\affil[1]{Facultad de Ingeniería Informática, Universidad de las Ciencias Informáticas, La Habana, Cuba}
 
-\institute{
-Facultad de Ingeniería Informática, Universidad de las Ciencias Informáticas, La Habana, Cuba \\
-\email{\{avidal, acolon, mbanteurt\}@uci.cu}
-}
+\date{}
+
+\begin{document}
 
 \maketitle
 
 \begin{abstract}
-The automatic classification of seismic signals is a critical task in modern seismology, with direct applications in early warning systems and seismic monitoring. Deep learning models, particularly Convolutional Neural Networks (CNNs), have demonstrated high performance in this domain. However, their black-box nature limits trust and adoption in safety-critical scenarios. This paper presents a 1D CNN architecture for classifying seismic signals into noise and seismic event categories, combined with the Integrated Gradients method from Explainable AI (XAI) to interpret model decisions. We evaluate the model on both synthetic data, generated through a physically-inspired computational model, and real data acquired directly from the Cuban National Seismological Research Center (CENAIS), specifically station CW.QMBU. By leveraging a local seismic catalog and applying data augmentation informed by seismic radiation patterns, the model achieved 100\% accuracy on both synthetic and real Cuban datasets. This demonstrates the feasibility of the approach and highlights the importance of XAI for validating model behavior in local, realistic conditions. The complete implementation is publicly available to ensure reproducibility.
+\noindent The automatic classification of seismic signals is a critical task in modern seismology, with direct applications in early warning systems and seismic monitoring. Deep learning models, particularly Convolutional Neural Networks (CNNs), have demonstrated high performance in this domain. However, their black-box nature limits trust and adoption in safety-critical scenarios. This paper presents a 1D CNN architecture for classifying seismic signals into noise and seismic event categories, combined with the Integrated Gradients method from Explainable AI (XAI) to interpret model decisions. We evaluate the model on both synthetic data, generated through a physically-inspired computational model, and real data acquired directly from the Cuban National Seismological Research Center (CENAIS), specifically station CW.QMBU. By leveraging a local seismic catalog and applying data augmentation informed by seismic radiation patterns, the model achieved 100\% accuracy on both synthetic and real Cuban datasets. This demonstrates the feasibility of the approach and highlights the importance of XAI for validating model behavior in local, realistic conditions. The complete implementation is publicly available to ensure reproducibility.
 
-\keywords{Explainable AI \and Integrated Gradients \and 1D CNN \and Seismic Signal Classification \and CENAIS \and Deep Learning}
+\vspace{0.5em}
+\noindent\keywords{Explainable AI, Integrated Gradients, 1D CNN, Seismic Signal Classification, CENAIS, Deep Learning}
 \end{abstract}
 
 \section{Introduction}
@@ -64,7 +75,7 @@ where $A(t) = A_0 e^{-\beta t}$ is a temporal envelope simulating amplitude deca
 
 \subsection{Real Cuban Data Acquisition and Processing}
 
-Real seismic data was acquired from the Cuban National Seismological Research Center (CENAIS), specifically from station \textbf{CW.QMBU} (channel HHE, 100 Hz sampling rate). 
+Real seismic data was acquired from the Cuban National Seismological Research Center (CENAIS), specifically from station \textbf{CW.QMBU} (channel HHE, 100 Hz sampling rate). The data was provided within an academic collaboration framework with the Universidad de Oriente (IPSJAM) and supervised by Dr.C Dionis López Ramos.
 
 The processing pipeline involved:
 \begin{enumerate}
@@ -141,7 +152,7 @@ Accuracy & \multicolumn{3}{c}{1.00} & 200 \\
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{resultados/matriz_confusion_cubano.png}
+\includegraphics[width=0.8\textwidth]{matriz_confusion_cubano.png}
 \caption{Confusion matrix on the real Cuban test set (Station CW.QMBU).}
 \label{fig:confusion_cubano}
 \end{figure}
@@ -150,7 +161,7 @@ Accuracy & \multicolumn{3}{c}{1.00} & 200 \\
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{resultados/explicacion_cubana_integrated_gradients.png}
+\includegraphics[width=0.9\textwidth]{explicacion_cubana_integrated_gradients.png}
 \caption{Integrated Gradients attribution on a correctly classified real Cuban seismic event. Top: input waveform. Bottom: per-sample attributions (red = positive contribution to the ``event'' class).}
 \label{fig:xai_cubano}
 \end{figure}
@@ -180,6 +191,10 @@ Future work includes:
 
 The complete implementation is publicly available at: \url{https://github.com/34miguel63/Proyecto-XAI-Sismologia}
 
+\section*{Acknowledgments}
+
+The authors gratefully acknowledge the \textbf{National Seismological Research Center (CENAIS)} of Cuba for providing access to real seismic data from the Cuban national network. Special thanks to \textbf{Dr. Bladimir Moreno Toirán} (CENAIS) for his technical support during the data acquisition process, and to \textbf{Madeley Graham León} and \textbf{Dr.C Dionis López Ramos} from Universidad de Oriente (IPSJAM) for sharing the seismic traces and the technical characterization document that informed this work.
+
 \begin{thebibliography}{99}
 
 \bibitem{mousavi2019stead}
@@ -208,6 +223,9 @@ ObsPy: A Python Toolbox for Seismology. \url{https://docs.obspy.org/}
 
 \bibitem{cenais2024}
 Centro Nacional de Investigaciones Sismológicas (CENAIS), Cuba. \url{https://www.cenais.gob.cu}
+
+\bibitem{graham2026}
+Graham León, M.: Caracterización de Datos CENAIS: Análisis de Similitud con Datasets Benchmark y Evaluación de Modelos Implementables. Universidad de Oriente (IPSJAM), Trabajo de Diploma supervisado por Dr.C Dionis López Ramos (2026).
 
 \end{thebibliography}
 

@@ -117,9 +117,21 @@ Proyecto XAI Sismologia/
 └── docs/                                  # Additional documentation
 ```
 
-## 🙏 Acknowledgments
-- National Seismological Research Center (CENAIS), Cuba.
-- United States Geological Survey (USGS) for the reference catalog.
+## 🙏 Credits and Acknowledgments
 
-## 📄 License
-This project is licensed under the MIT License.
+### 🏛️ Seismic Data Source
+The real data used in this project comes from the **National Seismological Research Center (CENAIS)** of Cuba, the country's official seismic monitoring institution.
+
+### 👥 Academic Collaboration
+We especially thank:
+
+- **Madeley Graham León** (Universidad de Oriente - IPSJAM) for sharing the data files and the technical characterization document (`docs/Caracterizacion_Datos_CENAIS_v2.docx`).
+- **Dr.C Dionis López Ramos** (Universidad de Oriente) for the academic supervision of the source work.
+- **Dr. Bladimir Moreno Toirán** (CENAIS) for facilitating access to the seismic traces during the technical visit on March 4, 2026.
+
+### 🌐 Reference Institutions
+- **CENAIS** (Cuba): Official source of the real data.
+- **USGS** (USA): Global reference catalog.
+- **IRIS DMC** (International): Worldwide seismic data backup.
+
+📄 See the complete data provenance document at: [`docs/DATOS_CREDITOS.md`](docs/DATOS_CREDITOS.md)
